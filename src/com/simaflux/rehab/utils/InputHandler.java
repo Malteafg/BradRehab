@@ -20,8 +20,8 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 	
 	public InputHandler(Main main) {
 		this.main = main;
-		keys = new boolean[7];
-		prevKeys = new boolean[7];
+		keys = new boolean[19];
+		prevKeys = new boolean[19];
 	}
 	
 	public void update() {
@@ -42,6 +42,18 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 		if(k == KeyEvent.VK_UP) keys[UP] = b;
 		if(k == KeyEvent.VK_DOWN) keys[DOWN] = b;
 		if(k == KeyEvent.VK_F1) keys[F1] = b;
+		if(k == KeyEvent.VK_0) keys[_0] = b;
+		if(k == KeyEvent.VK_1) keys[_1] = b;
+		if(k == KeyEvent.VK_2) keys[_2] = b;
+		if(k == KeyEvent.VK_3) keys[_3] = b;
+		if(k == KeyEvent.VK_4) keys[_4] = b;
+		if(k == KeyEvent.VK_5) keys[_5] = b;
+		if(k == KeyEvent.VK_6) keys[_6] = b;
+		if(k == KeyEvent.VK_7) keys[_7] = b;
+		if(k == KeyEvent.VK_8) keys[_8] = b;
+		if(k == KeyEvent.VK_9) keys[_9] = b;
+		if(k == KeyEvent.VK_COMMA) keys[COMMA] = b;
+		if(k == KeyEvent.VK_COLON) keys[DOT] = b;
 	}
 	
 	@Override

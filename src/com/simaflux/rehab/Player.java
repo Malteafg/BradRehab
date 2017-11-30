@@ -9,14 +9,20 @@ import com.simaflux.rehab.utils.Vector2f;
 public class Player {
 	
 	private Vector2f pos, size;
+	private boolean dead;
+	private float speed;
 	
 	public Player() {
 		size = new Vector2f(50, 50);
-		pos = new Vector2f(200, Vars.PLAYER_HEIGHT - 50);
+		pos = new Vector2f(500, Vars.PLAYER_HEIGHT - 25);
 	}
 	
 	public void update() {
 		
+	}
+	
+	public void jump(float height, boolean dead) {
+		this.dead = dead;
 	}
 	
 	public void render(Graphics2D g) {

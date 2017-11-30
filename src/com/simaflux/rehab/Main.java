@@ -6,14 +6,16 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
 import com.simaflux.rehab.states.GameStateManager;
 import com.simaflux.rehab.utils.InputHandler;
+import com.simaflux.rehab.utils.Loader;
 import com.simaflux.rehab.utils.Vars;
-
 
 public class Main extends Canvas implements Runnable {
 	
@@ -24,6 +26,7 @@ public class Main extends Canvas implements Runnable {
 
 	private BufferStrategy bs;
 	private Graphics2D g;
+	private BufferedImage image;
 	
 	private GameStateManager gsm;
 	
@@ -34,16 +37,21 @@ public class Main extends Canvas implements Runnable {
 	private boolean displayCounter;
 	private int updates, frames;
 	
+	private static final boolean windowed = false;
+	
 	public Main() {
-		setPreferredSize(new Dimension(Vars.WIDTH, Vars.HEIGHT));
+		setPreferredSize(windowed ? new Dimension(1280, 720) : Toolkit.getDefaultToolkit().getScreenSize());
+		
+		image = new BufferedImage(Vars.WIDTH, Vars.HEIGHT, BufferedImage.TYPE_INT_RGB);
 		
 		window = new JFrame();
 		input = new InputHandler(this);
 		
 		addKeyListener(input);
 		addMouseListener(input);
-		addMouseMotionListener(input);
+		addMouseMotionListener(input);	
 		
+		Loader.loadAllTextures();
 		gsm = new GameStateManager();
 		
 		displayCounter = false;
@@ -106,12 +114,7 @@ public class Main extends Canvas implements Runnable {
 	}
 	
 	private void gameRender() {
-		bs = getBufferStrategy();
-		if(bs == null) {
-			createBufferStrategy(3);
-			return;
-		}
-		g = (Graphics2D) bs.getDrawGraphics();
+		g = (Graphics2D) image.getGraphics().create();
 		
 		// RENDERING HINTS
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -122,18 +125,26 @@ public class Main extends Canvas implements Runnable {
 		
 		// SCREEN CLEARING
 		g.setBackground(Color.BLACK);
-		g.clearRect(0, 0, Vars.WIDTH, Vars.HEIGHT);
+		g.clearRect(0, 0, window.getWidth(), window.getHeight());
 		
 		// DRAWING
 		gsm.render(g);
 
 		if(displayCounter) {
-			g.setColor(new Color(50, 255, 50, 150));
-			g.setFont(new Font("Serif", Font.BOLD, 30));
+			g.setColor(new Color(200, 140, 50, 150));
+			g.setFont(new Font("Serif", Font.BOLD, 40));
 			g.drawString("UPS: " + updates + "  FPS: " + frames, 20, 40);
 		}
 		
 		// SHOW GRAPHICS AND DISPOSE
+		bs = getBufferStrategy();
+		if(bs == null) {
+			createBufferStrategy(3);
+			return;
+		}
+		g = (Graphics2D) bs.getDrawGraphics();
+		
+		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 		bs.show();
 		g.dispose();
 	}
@@ -147,14 +158,15 @@ public class Main extends Canvas implements Runnable {
 	public static void main(String[] args) {
 		Main main = new Main();
 		
-		main.window.setResizable(false);
+		main.window.setResizable(true);
 		main.window.setTitle("Innovation");
 		main.window.add(main);
-		main.window.setUndecorated(false);
+		main.window.setUndecorated(!windowed);
 		main.window.pack();
 		main.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		main.window.setLocationRelativeTo(null);
 		main.window.setVisible(true);
+		main.window.requestFocus();
 		
 		main.start();
 	}
