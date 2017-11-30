@@ -37,7 +37,7 @@ public class Main extends Canvas implements Runnable {
 	private boolean displayCounter;
 	private int updates, frames;
 	
-	private static final boolean windowed = true;
+	private static final boolean windowed = false;
 	
 	public Main() {
 		setPreferredSize(windowed ? new Dimension(1280, 720) : Toolkit.getDefaultToolkit().getScreenSize());

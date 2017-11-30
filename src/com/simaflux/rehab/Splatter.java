@@ -21,7 +21,6 @@ public class Splatter {
 	}
 	
 	public void update() {
-		System.out.println("splatter");
 		for(Blood b: blood) b.update();
 	}
 	
