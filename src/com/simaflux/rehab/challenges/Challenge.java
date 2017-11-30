@@ -13,14 +13,14 @@ public abstract class Challenge {
 	public boolean updatePosition(float speed) {
 		pos.x -= speed;
 		
-		if(pos.x + size.x < 0) {
+		if(pos.x + size.x + 60 < 0) {
 			return true;
 		} else return false;
 	}
 	
 	public boolean answer(double a) {
 		answered = true;
-		if(a == -1) return false;
+		if(a == -1) return true;
 		
 		return answerCase(a);
 	}

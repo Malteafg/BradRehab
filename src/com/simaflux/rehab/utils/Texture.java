@@ -47,10 +47,10 @@ public class Texture {
 
 	public void render(Graphics2D g, int x, int y, double angle) {
 		AffineTransform a = new AffineTransform();
-        a.translate(x, y);
+        a.translate(x + width / 2.0, y + height / 2.0);
         a.rotate(angle);
         a.translate(- width / 2.0, - height / 2.0);
-        a.scale(0.5, 0.5);
+        a.scale(1, 1);
 		g.drawImage(image, a, null);
 	}
 	

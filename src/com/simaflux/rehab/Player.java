@@ -1,29 +1,49 @@
 package com.simaflux.rehab;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
+import com.simaflux.rehab.utils.Loader;
 import com.simaflux.rehab.utils.Vars;
 import com.simaflux.rehab.utils.Vector2f;
 
 public class Player {
 	
-	private Vector2f pos, size;
-	private boolean dead, jumping;
+	private Vector2f pos;
+	private boolean dead, jumping, rotating;
 	private float verticalSpeed;
 	
+	private double angle;
+	
+	private boolean bloodTime;
+	
 	public Player() {
-		size = new Vector2f(50, 50);
-		pos = new Vector2f(500, Vars.PLAYER_HEIGHT - 25);
+		pos = new Vector2f(500, Vars.PLAYER_HEIGHT);
+		
+		angle = 0;
+		rotating = false;
+		bloodTime = false;
 	}
 	
 	public void update() {
 		
 		if(jumping) {
 			pos = new Vector2f(pos.x, pos.y + verticalSpeed);
-			verticalSpeed -= 0.1;
+			verticalSpeed += rotating ? 0.25 : 0.5;
 			
-			jumping = pos.y < Vars.PLAYER_HEIGHT;
+			if(verticalSpeed > 0 && dead) rotating = true;
+			
+			if(pos.y > Vars.PLAYER_HEIGHT) {
+				jumping = false;
+				pos.y = Vars.PLAYER_HEIGHT;
+			}
+		}
+		
+		if(rotating) {
+			angle += 0.2;
+			
+			if(pos.y == Vars.PLAYER_HEIGHT) {
+				bloodTime = true;
+			}
 		}
 		
 	}
@@ -31,12 +51,19 @@ public class Player {
 	public void jump(float length, float height, boolean dead) {
 		this.dead = dead;
 		jumping = true;
-		verticalSpeed = height / length * 2;
+		verticalSpeed = (float) - (Math.sqrt(height));
 	}
 	
 	public void render(Graphics2D g) {
-		g.setColor(Color.WHITE);
-		g.fillOval((int) (pos.x - size.x / 2), (int) (pos.y - size.y / 2), (int) (size.x), (int) (size.y));
+		Loader.getTexture("user").render(g, (int) (pos.x), (int) (pos.y - Loader.getTexture("user").getHeight()), rotating ? angle : 0.0);
+	}
+	
+	public Vector2f getPos() {
+		return pos;
+	}
+	
+	public boolean bloodTime() {
+		return bloodTime;
 	}
 
 }

@@ -8,6 +8,8 @@ public class Vars {
 	
 	public static final int PLAYER_HEIGHT = 660;
 	
+	public static final float moveSpeed = 10f;
+	
 	public static final Vector2f mousePos = new Vector2f();
 	
 	public static final int ESCAPE = 0;

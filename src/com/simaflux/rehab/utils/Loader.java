@@ -10,6 +10,8 @@ public class Loader {
 	public static void loadAllTextures() {
 		loadTexture("bg", "environment");
 		loadTexture("plank", "environment");
+		
+		loadTexture("user", "player");
 	}
 	
 	private static HashMap<String, Texture> textures = new HashMap<String, Texture>();
