@@ -43,7 +43,7 @@ public class Player {
 //			System.out.println( - (startSpeed * time) - (0.5f * Vars.GRAVITY * Math.pow(time, 2)));
 //			System.out.println(Vars.PLAYER_HEIGHT - (startSpeed * time));
 //			System.out.println(df.format(-0.5f * Vars.GRAVITY * Maths.pow(time, 2)));
-//			System.out.println(df.format(Vars.PLAYER_HEIGHT - (startSpeed * time) - (0.5f * Vars.GRAVITY * Maths.pow(time, 2))));
+			System.out.println(df.format(Vars.PLAYER_HEIGHT - (startSpeed * time) - (0.5f * Vars.GRAVITY * Maths.pow(time, 2))));
 			pos = new Vector2f(pos.x, (Vars.PLAYER_HEIGHT - (startSpeed * time) - (0.5f * Vars.GRAVITY * Maths.pow(time, 2))));
 			
 			if(time > topTime) {
