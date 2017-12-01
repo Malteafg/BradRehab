@@ -20,8 +20,8 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 	
 	public InputHandler(Main main) {
 		this.main = main;
-		keys = new boolean[19];
-		prevKeys = new boolean[19];
+		keys = new boolean[23];
+		prevKeys = new boolean[23];
 	}
 	
 	public void update() {

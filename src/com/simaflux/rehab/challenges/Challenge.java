@@ -10,6 +10,8 @@ public abstract class Challenge {
 	
 	protected boolean answered;
 	
+	protected String q;
+	
 	public boolean updatePosition(float speed) {
 		pos.x -= speed;
 		
@@ -38,6 +40,10 @@ public abstract class Challenge {
 	
 	public boolean hasAnswered() {
 		return answered;
+	}
+	
+	public String getQuestion() {
+		return q;
 	}
 
 }

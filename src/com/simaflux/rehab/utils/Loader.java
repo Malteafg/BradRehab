@@ -12,6 +12,8 @@ public class Loader {
 		loadTexture("plank", "environment");
 		
 		loadTexture("user", "player");
+		loadTexture("run1", "player");
+		loadTexture("jump", "player");
 	}
 	
 	private static HashMap<String, Texture> textures = new HashMap<String, Texture>();
