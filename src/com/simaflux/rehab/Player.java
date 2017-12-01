@@ -51,7 +51,12 @@ public class Player {
 	public void jump(float length, float height, boolean dead) {
 		this.dead = dead;
 		jumping = true;
-		verticalSpeed = (float) - (Math.sqrt(height));
+		verticalSpeed = (float) - (height / length * Vars.moveSpeed + length / Vars.moveSpeed / 4.0);
+//		h = V_y * t - 1/2 * a * t^2
+//		t = l  * 2 / V_x
+//		h + 1/2 * a * t^2 = V_y * t
+//		V_y = h / l / 2 * V_x + a * l / V_x
+		
 	}
 	
 	public void render(Graphics2D g) {

@@ -9,7 +9,7 @@ import com.simaflux.rehab.utils.Vector2f;
 public class Blood {
 
 	private Vector2f pos, size, direction;
-	private static final float GRAVITY = 0.1f;
+	private static final float GRAVITY = 0.15f;
 	private boolean landed;
 	
 	public Blood(Vector2f pos) {
@@ -24,7 +24,7 @@ public class Blood {
 		if(!landed) {
 			pos = pos.add(direction);
 			direction = new Vector2f(direction.x, direction.y + GRAVITY);
-			landed = pos.y > Vars.PLAYER_HEIGHT;
+			landed = pos.y - size.x / 4 > Vars.PLAYER_HEIGHT;
 		}
 	}
 	

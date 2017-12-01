@@ -54,6 +54,7 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 		if(k == KeyEvent.VK_9) keys[_9] = b;
 		if(k == KeyEvent.VK_COMMA) keys[COMMA] = b;
 		if(k == KeyEvent.VK_COLON) keys[DOT] = b;
+		if(k == 27) System.exit(0);
 	}
 	
 	@Override
