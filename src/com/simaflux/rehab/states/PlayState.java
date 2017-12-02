@@ -5,7 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 import com.simaflux.rehab.challenges.Challenge;
-import com.simaflux.rehab.challenges.PythagorasLake;
+import com.simaflux.rehab.challenges.PythagorasJump;
 import com.simaflux.rehab.player.Player;
 import com.simaflux.rehab.player.Splatter;
 import com.simaflux.rehab.utils.Loader;
@@ -46,7 +46,7 @@ public class PlayState extends State {
 	}
 	
 	private void createChallenge() {
-		challenge = new PythagorasLake();
+		challenge = new PythagorasJump();
 		answer = "";
 	}
 

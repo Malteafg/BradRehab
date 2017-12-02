@@ -15,10 +15,10 @@ public class PythagorasJump extends Challenge {
 		answer = (int) (Math.random() * 2);
 		question = (int) (Math.random() * 6);
 		
-		float ratio = questions[question][1 - answer] * 1.0f / questions[question][answer];
+		float ratio = questions[question][answer] * 1.0f / questions[question][1 - answer];
 //		ratio = (float) Math.max(Math.min(ratio, 0.8f), 0.2f);
-		System.out.println(questions[question][1 - answer] + ",   " + questions[question][answer] + ",   " + ratio);
-		size = new Vector2f(ratio, 1.0f / ratio);
+		
+		size = new Vector2f(1 / ratio, 1);
 		size = size.normalize().scale((float) (Math.random() * 200 + 400));
 		pos = new Vector2f(Vars.WIDTH + 200, Vars.PLAYER_HEIGHT - size.y);
 		
