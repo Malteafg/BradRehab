@@ -6,11 +6,20 @@ import com.simaflux.rehab.utils.Vector2f;
 
 public abstract class Challenge {
 	
+	protected final int[][] questions = {{3, 4, 5}, {5, 12, 13}, {8, 15, 17}, {20, 21, 29}, {7, 24, 25}, {9, 40, 41}};
+	protected int answer, question;
+	
 	protected Vector2f pos, size;
 	
 	protected boolean answered;
 	
 	protected String q;
+	
+	protected final String name;
+	
+	public Challenge(String name) {
+		this.name = name;
+	}
 	
 	public boolean updatePosition(float speed) {
 		pos.x -= speed;
@@ -44,6 +53,10 @@ public abstract class Challenge {
 	
 	public String getQuestion() {
 		return q;
+	}
+	
+	public String getName() {
+		return name;
 	}
 
 }

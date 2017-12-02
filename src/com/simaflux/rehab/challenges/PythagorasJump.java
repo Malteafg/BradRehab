@@ -10,15 +10,16 @@ import com.simaflux.rehab.utils.Vector2f;
 
 public class PythagorasJump extends Challenge {
 	
-	private final int[][] questions = {{3, 4, 5}, {5, 12, 13}, {8, 15, 17}, {20, 21, 29}, {7, 24, 25}, {9, 40, 41}};
-	private final int answer, question;
-	
 	public PythagorasJump() {
+		super("PythagorasJump");
 		answer = (int) (Math.random() * 2);
 		question = (int) (Math.random() * 6);
-
-		size = new Vector2f((float) (Math.random() * 100 + questions[question][1 - answer] * 300.0 / questions[question][answer]), (float) ( questions[question][answer] * 300.0 / questions[question][1 - answer] + Math.random() * 100));
-		size = size.normalize().scale(500);
+		
+		float ratio = questions[question][1 - answer] * 1.0f / questions[question][answer];
+//		ratio = (float) Math.max(Math.min(ratio, 0.8f), 0.2f);
+		System.out.println(questions[question][1 - answer] + ",   " + questions[question][answer] + ",   " + ratio);
+		size = new Vector2f(ratio, 1.0f / ratio);
+		size = size.normalize().scale((float) (Math.random() * 200 + 400));
 		pos = new Vector2f(Vars.WIDTH + 200, Vars.PLAYER_HEIGHT - size.y);
 		
 		q = "How high is the wall?";
