@@ -13,6 +13,7 @@ public class Loader {
 		
 		loadTexture("user", "player");
 		loadTexture("run1", "player");
+		loadTexture("run2", "player");
 		loadTexture("jump", "player");
 	}
 	
