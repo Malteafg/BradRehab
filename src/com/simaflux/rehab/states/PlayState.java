@@ -15,8 +15,8 @@ public class PlayState extends State {
 	
 	private Player player;
 	
-	private boolean moving;
-	private float movedDist;
+	private boolean moving, jumping;
+	private float movedDist, horizontalSpeed;
 	
 	private Challenge challenge;
 	
@@ -30,6 +30,7 @@ public class PlayState extends State {
 		player = new Player();
 		
 		moving = true;
+		jumping = false;
 		
 		movedDist = 0;
 		
@@ -60,6 +61,18 @@ public class PlayState extends State {
 		} else {
 			player.update();
 		}
+		
+		if(jumping) {
+			movedDist += horizontalSpeed;
+			
+			challenge.updatePosition(horizontalSpeed);
+			
+			if(player.getPos().y == Vars.PLAYER_HEIGHT) {
+				jumping = false;
+				moving = true;
+			}
+		}
+		
 	}
 
 	@Override
@@ -101,9 +114,10 @@ public class PlayState extends State {
 			if(k == Vars.DOT) answer += ".";
 			
 			if(k == Vars.SPACE) {
-				moving = true;
+				jumping = true;
 				boolean c = challenge.answer(answer.equals("") ? -1 : Double.parseDouble(answer));
-				player.jump(challenge.getPos().x + challenge.getSize().x - player.getPos().x, challenge.getSize().y, c);
+				player.jump(challenge.getPos().x + challenge.getSize().x - player.getPos().x, challenge.getSize().y + Loader.getTexture("user").getHeight() / 2, c);
+				horizontalSpeed = player.getHorizontalSpeed();
 			}
 		}
 	}

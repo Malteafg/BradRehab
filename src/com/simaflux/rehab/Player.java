@@ -10,7 +10,7 @@ public class Player {
 	
 	private Vector2f pos;
 	private boolean dead, jumping, rotating;
-	private float verticalSpeed;
+	private float verticalSpeed, horizontalSpeed;
 	
 	private double angle;
 	
@@ -28,7 +28,8 @@ public class Player {
 		
 		if(jumping) {
 			pos = new Vector2f(pos.x, pos.y + verticalSpeed);
-			verticalSpeed += rotating ? 0.25 : 0.5;
+//			verticalSpeed += rotating ? 0.25 : 0.5;
+			verticalSpeed += Vars.GRAVITY;
 			
 			if(verticalSpeed > 0 && dead) rotating = true;
 			
@@ -51,11 +52,9 @@ public class Player {
 	public void jump(float length, float height, boolean dead) {
 		this.dead = dead;
 		jumping = true;
-		verticalSpeed = (float) - (height / length * Vars.moveSpeed + length / Vars.moveSpeed / 4.0);
-//		h = V_y * t - 1/2 * a * t^2
-//		t = l  * 2 / V_x
-//		h + 1/2 * a * t^2 = V_y * t
-//		V_y = h / l / 2 * V_x + a * l / V_x
+		
+		verticalSpeed = (float) - Math.sqrt(height * 2.0 * Vars.GRAVITY);
+		horizontalSpeed = (float) - ((length * Vars.GRAVITY) / verticalSpeed);
 		
 	}
 	
@@ -69,6 +68,10 @@ public class Player {
 	
 	public boolean bloodTime() {
 		return bloodTime;
+	}
+
+	public float getHorizontalSpeed() {
+		return horizontalSpeed;
 	}
 
 }

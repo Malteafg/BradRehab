@@ -4,7 +4,7 @@ public class Vars {
 	
 	public static final int WIDTH = 1920, HEIGHT = 1080;
 	
-	public static final float GRAVITY = 9.82f;
+	public static final float GRAVITY = 0.5f;
 	
 	public static final int PLAYER_HEIGHT = 660;
 	

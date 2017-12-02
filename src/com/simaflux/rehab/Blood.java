@@ -14,9 +14,9 @@ public class Blood {
 	
 	public Blood(Vector2f pos) {
 		this.pos = pos;
-		this.direction = new Vector2f((float) (1.0 - Math.random() * 2.0), (float) -Math.random());
-		this.direction = direction.normalize().scale((float) Math.random() * 5 + 2);
-		this.size = new Vector2f((float) (5 * Math.random() + 5), (float) (5 * Math.random() + 5));
+		this.direction = new Vector2f((float) (1.0 - Math.random() * 2.0), (float) - Math.random() * 3);
+		this.direction = direction.normalize().scale((float) Math.pow(Math.random(), 2) * 8);
+		this.size = new Vector2f((float) (6 * Math.pow(Math.random(), 2) + 2), (float) (5 * Math.random() + 5));
 		this.landed = false;
 	}
 	
