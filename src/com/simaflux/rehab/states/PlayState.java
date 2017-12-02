@@ -5,7 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 import com.simaflux.rehab.challenges.Challenge;
-import com.simaflux.rehab.challenges.PythagorasJump;
+import com.simaflux.rehab.challenges.PythagorasLake;
 import com.simaflux.rehab.player.Player;
 import com.simaflux.rehab.player.Splatter;
 import com.simaflux.rehab.utils.Loader;
@@ -46,7 +46,7 @@ public class PlayState extends State {
 	}
 	
 	private void createChallenge() {
-		challenge = new PythagorasJump();
+		challenge = new PythagorasLake();
 		answer = "";
 	}
 
@@ -128,13 +128,24 @@ public class PlayState extends State {
 			if(k == Vars._9) answer += "9";
 			if(k == Vars.COMMA) answer += ".";
 			if(k == Vars.DOT) answer += ".";
-			if(k == Vars.BACK) answer.substring(0, answer.length() - 2);
+			if(k == Vars.BACK) if(answer.length() > 0) answer = answer.substring(0, answer.length() - 1);
 			
 			if(k == Vars.SPACE) {
 				jumping = true;
 				boolean c = challenge.answer(answer.equals("") ? -1 : Double.parseDouble(answer));
-				player.jump(challenge.getPos().x + challenge.getSize().x - player.getPos().x, challenge.getSize().y + (c ? -1 : 1) * Loader.getTexture("user").getHeight() / 2, c);
-				horizontalSpeed = player.getHorizontalSpeed();
+				
+				switch(challenge.getName()) {
+				case "PythagorasJump":
+					player.jump(challenge.getPos().x + challenge.getSize().x - player.getPos().x, 
+							(c ? challenge.getSize().y * 0.9f : challenge.getSize().y + Loader.getTexture("user").getHeight() / 2), 
+							c);
+					horizontalSpeed = player.getHorizontalSpeed();
+					break;
+				case "PythagorasLake":
+					player.jump(challenge.getPos().x + challenge.getSize().x - player.getPos().x, 150, c);
+					horizontalSpeed = player.getHorizontalSpeed();
+					break;
+				}
 			}
 		}
 	}

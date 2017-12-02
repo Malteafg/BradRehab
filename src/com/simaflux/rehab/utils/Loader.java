@@ -10,6 +10,7 @@ public class Loader {
 	public static void loadAllTextures() {
 		loadTexture("bg", "environment");
 		loadTexture("plank", "environment");
+		loadTexture("hole", "environment");
 		
 		loadTexture("user", "player");
 		loadTexture("run1", "player");
@@ -21,9 +22,9 @@ public class Loader {
 	
 	private static void loadTexture(String name, String folder) {
 		try {
-            textures.put(name, new Texture("/" + folder + "/" + name + ".png"));
-        } catch(IllegalArgumentException e) {
-            e.printStackTrace();
+			textures.put(name, new Texture("/" + folder + "/" + name + ".png"));
+		} catch(IllegalArgumentException e) {
+        	e.printStackTrace();
             System.err.println("Failed to load: " + name);
         }
 	}
