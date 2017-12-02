@@ -70,7 +70,6 @@ public class PlayState extends State {
 			player.update(moving);
 		}
 		
-<<<<<<< HEAD
 		if(jumping) {
 			movedDist += horizontalSpeed;
 			
@@ -82,9 +81,7 @@ public class PlayState extends State {
 			}
 		}
 		
-=======
 		flashTimer++;
->>>>>>> 1612c9f3bcbed2dba9fc19921e77175424b98ce2
 	}
 
 	@Override
@@ -136,12 +133,8 @@ public class PlayState extends State {
 			if(k == Vars.SPACE) {
 				jumping = true;
 				boolean c = challenge.answer(answer.equals("") ? -1 : Double.parseDouble(answer));
-<<<<<<< HEAD
-				player.jump(challenge.getPos().x + challenge.getSize().x - player.getPos().x, challenge.getSize().y + Loader.getTexture("user").getHeight() / 2, c);
+				player.jump(challenge.getPos().x + challenge.getSize().x - player.getPos().x, challenge.getSize().y + (c ? -1 : 1) * Loader.getTexture("user").getHeight() / 2, c);
 				horizontalSpeed = player.getHorizontalSpeed();
-=======
-				player.jump(challenge.getPos().x + challenge.getSize().x - player.getPos().x, !c ? challenge.getSize().y : challenge.getSize().y * 0.8f, c);
->>>>>>> 1612c9f3bcbed2dba9fc19921e77175424b98ce2
 			}
 		}
 	}
