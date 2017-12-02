@@ -4,10 +4,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
-import com.simaflux.rehab.Player;
-import com.simaflux.rehab.Splatter;
 import com.simaflux.rehab.challenges.Challenge;
 import com.simaflux.rehab.challenges.PythagorasJump;
+import com.simaflux.rehab.player.Player;
+import com.simaflux.rehab.player.Splatter;
 import com.simaflux.rehab.utils.Loader;
 import com.simaflux.rehab.utils.Vars;
 
@@ -23,9 +23,17 @@ public class PlayState extends State {
 	private String answer;
 	
 	private Splatter splatter;
+	
+	private int time;
+	private final int selectedTime;
+	
+	private int flashTimer;
 
-	public PlayState(GameStateManager gsm) {
+	public PlayState(GameStateManager gsm, int selectedTime) {
 		super(gsm);
+		
+		time = 0;
+		this.selectedTime = selectedTime;
 		
 		player = new Player();
 		
@@ -59,9 +67,10 @@ public class PlayState extends State {
 			moving = false;
 			splatter.update();
 		} else {
-			player.update();
+			player.update(moving);
 		}
 		
+<<<<<<< HEAD
 		if(jumping) {
 			movedDist += horizontalSpeed;
 			
@@ -73,34 +82,44 @@ public class PlayState extends State {
 			}
 		}
 		
+=======
+		flashTimer++;
+>>>>>>> 1612c9f3bcbed2dba9fc19921e77175424b98ce2
 	}
 
 	@Override
 	public void render(Graphics2D g) {
-		Loader.getTexture("bg").render(g, (int) ((-movedDist / 3) % Vars.WIDTH), 0);
-		Loader.getTexture("bg").render(g, (int) ((-movedDist / 3) % Vars.WIDTH) + Vars.WIDTH, 0);
-		Loader.getTexture("plank").render(g, (int) (-movedDist % Vars.WIDTH), Vars.PLAYER_HEIGHT);
-		Loader.getTexture("plank").render(g, (int) (-movedDist % Vars.WIDTH) + Vars.WIDTH, Vars.PLAYER_HEIGHT);
+		Loader.getTexture("bg").render(g, (-movedDist / 3) % Vars.WIDTH, 0);
+		Loader.getTexture("bg").render(g, (-movedDist / 3) % Vars.WIDTH + Vars.WIDTH, 0);
+		Loader.getTexture("plank").render(g, -movedDist % Vars.WIDTH, Vars.PLAYER_HEIGHT);
+		Loader.getTexture("plank").render(g, -movedDist % Vars.WIDTH + Vars.WIDTH, Vars.PLAYER_HEIGHT);
 		
 		challenge.render(g);
 		
-		g.setColor(Color.RED);
-		g.setFont(new Font("Serif", Font.BOLD, 50));
-		g.drawString(answer, 1300, 300);
-		
 		if(player.bloodTime() && splatter != null) {
-			splatter.render(g);
-			Loader.getTexture("user").render(g, (int) (player.getPos().x), (int) (player.getPos().y - 80), Math.PI / 2);
-		} else player.render(g);
+			splatter.render(g);  
+			Loader.getTexture("user").render(g, player.getPos().x, player.getPos().y - 80, Math.PI / 2);
+		} else player.render(g, moving);
+
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("Serif", Font.BOLD, 60));
+		int answerwidth = g.getFontMetrics().stringWidth(answer);
+		if(!moving && !challenge.hasAnswered()) {
+			int width = g.getFontMetrics().stringWidth(challenge.getQuestion());
+			g.drawString(challenge.getQuestion(), Vars.WIDTH / 2 - width / 2, Vars.PLAYER_HEIGHT + 200);
+			g.fillRect(Vars.WIDTH / 2 - 75, Vars.PLAYER_HEIGHT + 270, 150, 70);
+			g.setColor(Color.BLACK);
+			int t = 60;
+			if(flashTimer % t > 0 && flashTimer % t < t / 2) g.fillRect(Vars.WIDTH / 2 + answerwidth / 2, Vars.PLAYER_HEIGHT + 280, 5, 50);
+			g.setFont(new Font("Serif", Font.BOLD, 50));
+			g.drawString(answer, Vars.WIDTH / 2 - answerwidth / 2, Vars.PLAYER_HEIGHT + 320);
+		}
 	}
 
 	@Override
 	public void keyPressed(int k) {
 		if(!moving && !challenge.hasAnswered()) {
-			if(k == Vars._0) {
-				answer += "0";
-				System.out.println(answer);
-			}
+			if(k == Vars._0) answer += "0";
 			if(k == Vars._1) answer += "1";
 			if(k == Vars._2) answer += "2";
 			if(k == Vars._3) answer += "3";
@@ -112,12 +131,17 @@ public class PlayState extends State {
 			if(k == Vars._9) answer += "9";
 			if(k == Vars.COMMA) answer += ".";
 			if(k == Vars.DOT) answer += ".";
+			if(k == Vars.BACK) answer.substring(0, answer.length() - 2);
 			
 			if(k == Vars.SPACE) {
 				jumping = true;
 				boolean c = challenge.answer(answer.equals("") ? -1 : Double.parseDouble(answer));
+<<<<<<< HEAD
 				player.jump(challenge.getPos().x + challenge.getSize().x - player.getPos().x, challenge.getSize().y + Loader.getTexture("user").getHeight() / 2, c);
 				horizontalSpeed = player.getHorizontalSpeed();
+=======
+				player.jump(challenge.getPos().x + challenge.getSize().x - player.getPos().x, !c ? challenge.getSize().y : challenge.getSize().y * 0.8f, c);
+>>>>>>> 1612c9f3bcbed2dba9fc19921e77175424b98ce2
 			}
 		}
 	}

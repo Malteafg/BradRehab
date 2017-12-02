@@ -14,10 +14,13 @@ public class PythagorasJump extends Challenge {
 	private final int answer, question;
 	
 	public PythagorasJump() {
-		size = new Vector2f((float) (Math.random() * 400 + 100), (float) (Math.random() * 400 + 100));
-		pos = new Vector2f(Vars.WIDTH + 200, Vars.PLAYER_HEIGHT - size.y);
 		answer = (int) (Math.random() * 2);
 		question = (int) (Math.random() * 6);
+
+		size = new Vector2f((float) (Math.random() * 400 + 100), (float) (Math.random() * 400 + 100));
+		pos = new Vector2f(Vars.WIDTH + 200, Vars.PLAYER_HEIGHT - size.y);
+		
+		q = "How high is the wall?";
 	}
 	
 	@Override

@@ -1,4 +1,4 @@
-package com.simaflux.rehab;
+package com.simaflux.rehab.player;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;

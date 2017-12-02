@@ -1,6 +1,5 @@
 package com.simaflux.rehab.utils;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -25,8 +24,11 @@ public class Texture {
 		height = image.getHeight();
 	}
 	
-	public void setColor(Color color) {
+	public Texture(BufferedImage image) {
+		this.image = image;
 		
+		width = image.getWidth();
+		height = image.getHeight();
 	}
 	
 	public int getWidth() {
@@ -37,15 +39,19 @@ public class Texture {
 		return height;
 	}
 	
-	public void render(Graphics2D g, int x, int y) {
-		g.drawImage(image, x, y, null);
+	public BufferedImage getImage() {
+		return image;
 	}
 	
-	public void render(Graphics2D g, int x, int y, int width, int height) {
-		g.drawImage(image, x, y, width, height, null);
+	public void render(Graphics2D g, float x, float y) {
+		g.drawImage(image, (int) x, (int) y, null);
+	}
+	
+	public void render(Graphics2D g, float x, float y, float width, float height) {
+		g.drawImage(image, (int) x, (int) y, (int) width, (int) height, null);
 	}
 
-	public void render(Graphics2D g, int x, int y, double angle) {
+	public void render(Graphics2D g, float x, float y, double angle) {
 		AffineTransform a = new AffineTransform();
         a.translate(x + width / 2.0, y + height / 2.0);
         a.rotate(angle);
