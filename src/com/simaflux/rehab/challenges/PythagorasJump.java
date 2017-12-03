@@ -36,6 +36,9 @@ public class PythagorasJump extends Challenge {
 		g.drawLine((int) (pos.x), (int) (pos.y + size.y), (int) (pos.x + size.x), (int) (pos.y + size.y));
 		g.drawLine((int) (pos.x + size.x), (int) (pos.y), (int) (pos.x + size.x), (int) (pos.y + size.y));
 		
+		g.drawLine((int) (pos.x + size.x), (int) (pos.y + size.y), (int) (pos.x + size.x), (int) (pos.y + size.y));
+		g.drawLine((int) (pos.x + size.x), (int) (pos.y + size.y), (int) (pos.x + size.x), (int) (pos.y + size.y));
+		
 		g.setFont(new Font("Serif", Font.BOLD, 30));
 		g.drawString(Integer.toString(questions[question][2]), (int) (pos.x + size.x / 2 - 30), (int) (pos.y + size.y / 2 - 30));
 		g.drawString(Integer.toString(questions[question][answer * -1 + 1]), (int) (pos.x + size.x / 2 - 10), (int) (pos.y + size.y + 30));

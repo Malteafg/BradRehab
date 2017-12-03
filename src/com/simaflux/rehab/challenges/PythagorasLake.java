@@ -19,7 +19,7 @@ public class PythagorasLake extends Challenge {
 		question = (int) (Math.random() * 6);
 
 		midlength = 150;
-		size = new Vector2f(400, 200);
+		size = new Vector2f(600, 250);
 		pos = new Vector2f(Vars.WIDTH + 200, Vars.PLAYER_HEIGHT);
 		
 		q = "How long is the lake?";
@@ -33,8 +33,11 @@ public class PythagorasLake extends Challenge {
 		g.setColor(Color.WHITE);
 		g.setStroke(new BasicStroke(5));
 		g.drawLine((int) (pos.x), (int) (pos.y), (int) (pos.x + size.x), (int) (pos.y));
-		g.drawLine((int) (pos.x), (int) (pos.y), (int) (pos.x + midlength), (int) (pos.y + size.y - 40));
-		g.drawLine((int) (pos.x + midlength), (int) (pos.y + size.y - 40), (int) (pos.x + size.x), (int) (pos.y));
+		g.drawLine((int) (pos.x), (int) (pos.y), (int) (pos.x + midlength), (int) (pos.y + size.y - 55));
+		g.drawLine((int) (pos.x + midlength), (int) (pos.y + size.y - 55), (int) (pos.x + size.x), (int) (pos.y));
+		
+		g.drawLine((int) (pos.x + midlength - 35), (int) (pos.y + size.y - 75), (int) (pos.x + midlength + 20), (int) (pos.y + size.y - 100));
+		g.drawLine((int) (pos.x + midlength - 20), (int) (pos.y + size.y - 80),(int) (pos.x + midlength + 20), (int) (pos.y + size.y - 100));
 		
 		g.setFont(new Font("Serif", Font.BOLD, 30));
 		g.drawString(Integer.toString(questions[question][0]), (int) (pos.x + midlength / 2 - 20), (int) (pos.y + size.y / 2));

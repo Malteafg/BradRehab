@@ -5,7 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 import com.simaflux.rehab.challenges.Challenge;
-import com.simaflux.rehab.challenges.PythagorasJump;
+import com.simaflux.rehab.challenges.PythagorasLake;
 import com.simaflux.rehab.player.Player;
 import com.simaflux.rehab.player.Splatter;
 import com.simaflux.rehab.utils.Loader;
@@ -46,7 +46,7 @@ public class PlayState extends State {
 	}
 	
 	private void createChallenge() {
-		challenge = new PythagorasJump();
+		challenge = new PythagorasLake();
 		answer = "";
 	}
 
@@ -101,9 +101,10 @@ public class PlayState extends State {
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Serif", Font.BOLD, 60));
 		int answerwidth = g.getFontMetrics().stringWidth(answer);
-		if(!moving && !challenge.hasAnswered()) {
+		
+		if(!moving && !challenge.hasAnswered() && !player.bloodTime()) {
 			int width = g.getFontMetrics().stringWidth(challenge.getQuestion());
-			g.drawString(challenge.getQuestion(), Vars.WIDTH / 2 - width / 2, Vars.PLAYER_HEIGHT + 200);
+			g.drawString(challenge.getQuestion(), Vars.WIDTH / 2 - width / 2, Vars.PLAYER_HEIGHT + 250);
 			g.fillRect(Vars.WIDTH / 2 - 75, Vars.PLAYER_HEIGHT + 270, 150, 70);
 			g.setColor(Color.BLACK);
 			int t = 60;
@@ -142,7 +143,9 @@ public class PlayState extends State {
 					horizontalSpeed = player.getHorizontalSpeed();
 					break;
 				case "PythagorasLake":
-					player.jump(challenge.getPos().x + challenge.getSize().x - player.getPos().x, 150, c);
+					player.jump(c ? (challenge.getPos().x + challenge.getSize().x - player.getPos().x) / 3.0f : 
+							(challenge.getPos().x + challenge.getSize().x - player.getPos().x) / 1.9f, 
+							200, c);
 					horizontalSpeed = player.getHorizontalSpeed();
 					break;
 				}

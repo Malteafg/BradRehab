@@ -45,7 +45,7 @@ public class Player {
 		if(rotating) {
 			angle += 0.2;
 			
-			if(pos.y == Vars.PLAYER_HEIGHT) {
+			if(pos.y >= Vars.PLAYER_HEIGHT) {
 				bloodTime = true;
 			}
 		}
