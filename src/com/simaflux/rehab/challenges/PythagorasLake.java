@@ -36,13 +36,14 @@ public class PythagorasLake extends Challenge {
 		g.drawLine((int) (pos.x), (int) (pos.y), (int) (pos.x + midlength), (int) (pos.y + size.y - 55));
 		g.drawLine((int) (pos.x + midlength), (int) (pos.y + size.y - 55), (int) (pos.x + size.x), (int) (pos.y));
 		
-		g.drawLine((int) (pos.x + midlength - 35), (int) (pos.y + size.y - 75), (int) (pos.x + midlength + 20), (int) (pos.y + size.y - 100));
-		g.drawLine((int) (pos.x + midlength - 20), (int) (pos.y + size.y - 80),(int) (pos.x + midlength + 20), (int) (pos.y + size.y - 100));
+		g.drawLine((int) (pos.x + midlength - 15), (int) (pos.y + size.y - 75), (int) (pos.x + midlength + 10), (int) (pos.y + size.y - 90));
+		g.drawLine((int) (pos.x + midlength + 25), (int) (pos.y + size.y - 65), (int) (pos.x + midlength + 10), (int) (pos.y + size.y - 90));
 		
 		g.setFont(new Font("Serif", Font.BOLD, 30));
 		g.drawString(Integer.toString(questions[question][0]), (int) (pos.x + midlength / 2 - 20), (int) (pos.y + size.y / 2));
 		g.drawString(Integer.toString(questions[question][1]), (int) (pos.x + size.x / 2 + midlength / 2 - 30), (int) (pos.y + size.y / 2 + 20));
 		g.drawString("?", (int) (pos.x + size.x / 2), (int) (pos.y - 10));
+		g.drawString("90", (int) (pos.x + midlength), (int) (pos.y + size.y - 100));
 	}
 
 	@Override

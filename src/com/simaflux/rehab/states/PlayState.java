@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 import com.simaflux.rehab.challenges.Challenge;
+import com.simaflux.rehab.challenges.PythagorasJump;
 import com.simaflux.rehab.challenges.PythagorasLake;
 import com.simaflux.rehab.player.Player;
 import com.simaflux.rehab.player.Splatter;
@@ -24,16 +25,15 @@ public class PlayState extends State {
 	
 	private Splatter splatter;
 	
-	private int time;
-	private final int selectedTime;
+	private int flashTimer, deadTime;
 	
-	private int flashTimer;
+	private int score;
+	private boolean won;
+	
+	private int level;
 
-	public PlayState(GameStateManager gsm, int selectedTime) {
+	public PlayState(GameStateManager gsm, int level) {
 		super(gsm);
-		
-		time = 0;
-		this.selectedTime = selectedTime;
 		
 		player = new Player();
 		
@@ -42,42 +42,68 @@ public class PlayState extends State {
 		
 		movedDist = 0;
 		
+		score = 0;
+		
+		won = false;
+		this.level = level;
+		deadTime = 180;
+		
 		createChallenge();
 	}
 	
 	private void createChallenge() {
-		challenge = new PythagorasLake();
+		int r = (int) (Math.random() * 2);
+//		int r = 0;
+		switch(r) {
+		case 0:
+			challenge = new PythagorasLake();
+			break;
+		case 1:
+			challenge = new PythagorasJump();
+			break;
+		}
 		answer = "";
 	}
 
 	@Override
 	public void update() {
-		if(moving) {
-			movedDist += Vars.moveSpeed;
-			
-			if(challenge.updatePosition(Vars.moveSpeed)) createChallenge();
-			
-			if(challenge.getPos().x + challenge.getSize().x / 2 < Vars.WIDTH / 2 && !challenge.hasAnswered()) {
-				moving = false;
+		if(!won) {	
+			if(moving) {
+				movedDist += Vars.moveSpeed;
+				
+				if(challenge.updatePosition(Vars.moveSpeed)) createChallenge();
+				
+				if(challenge.getPos().x + challenge.getSize().x / 2 < Vars.WIDTH / 2 && !challenge.hasAnswered()) {
+					moving = false;
+				}
 			}
-		}
-		
-		if(player.bloodTime()) {
-			if(moving) splatter = new Splatter(player.getPos());
-			moving = false;
-			splatter.update();
+			
+			if(player.bloodTime()) {
+				if(moving) splatter = new Splatter(player.getPos());
+				moving = false;
+				splatter.update();
+				deadTime--;
+				if(deadTime == 0) gsm.setState(new MenuState(gsm));
+			} else {
+				player.update(moving);
+			}
+			
+			if(jumping) {
+				movedDist += horizontalSpeed;
+				
+				challenge.updatePosition(horizontalSpeed);
+				
+				if(player.getPos().y == Vars.PLAYER_HEIGHT) {
+					jumping = false;
+					moving = true;
+					if(score == 10) won = true;
+				}
+			}
 		} else {
-			player.update(moving);
-		}
-		
-		if(jumping) {
-			movedDist += horizontalSpeed;
-			
-			challenge.updatePosition(horizontalSpeed);
-			
-			if(player.getPos().y == Vars.PLAYER_HEIGHT) {
-				jumping = false;
-				moving = true;
+			if(player.fly()) {
+				MenuState.unlocked[level + 1] = true;
+				MenuState.unlockedNum++;
+				gsm.setState(new MenuState(gsm));
 			}
 		}
 		
@@ -96,7 +122,11 @@ public class PlayState extends State {
 		if(player.bloodTime() && splatter != null) {
 			splatter.render(g);  
 			Loader.getTexture("user").render(g, player.getPos().x, player.getPos().y - 80, Math.PI / 2);
-		} else player.render(g, moving);
+		} else if(won) {
+			Loader.getTexture("jump").render(g, player.getPos().x, player.getPos().y - 128);
+		} else {
+			player.render(g, moving);
+		}
 
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Serif", Font.BOLD, 60));
@@ -111,6 +141,19 @@ public class PlayState extends State {
 			if(flashTimer % t > 0 && flashTimer % t < t / 2) g.fillRect(Vars.WIDTH / 2 + answerwidth / 2, Vars.PLAYER_HEIGHT + 280, 5, 50);
 			g.setFont(new Font("Serif", Font.BOLD, 50));
 			g.drawString(answer, Vars.WIDTH / 2 - answerwidth / 2, Vars.PLAYER_HEIGHT + 320);
+			
+//			Loader.getTexture("calculator").render(g, 1450, 600, 300, 400);
+		}
+		
+		g.setFont(new Font("Serif", Font.BOLD, 70));
+		g.setColor(Color.BLACK);
+		g.drawString("Score: " + score, 20, 90);
+		
+		if(won) {
+			g.setFont(new Font("Serif", Font.BOLD, 70));
+			g.setColor(Color.BLACK);
+			int w = g.getFontMetrics().stringWidth(MenuState.topics[level + 1] + " is unlocked");
+			g.drawString(MenuState.topics[level + 1] + " is unlocked", Vars.WIDTH / 2 - w / 2, 800);
 		}
 	}
 
@@ -127,13 +170,15 @@ public class PlayState extends State {
 			if(k == Vars._7) answer += "7";
 			if(k == Vars._8) answer += "8";
 			if(k == Vars._9) answer += "9";
-			if(k == Vars.COMMA) answer += ".";
 			if(k == Vars.DOT) answer += ".";
+			if(k == Vars.COMMA) answer += ".";
 			if(k == Vars.BACK) if(answer.length() > 0) answer = answer.substring(0, answer.length() - 1);
 			
-			if(k == Vars.SPACE) {
+			if(k == Vars.SPACE || k == Vars.ENTER) {
 				jumping = true;
 				boolean c = challenge.answer(answer.equals("") ? -1 : Double.parseDouble(answer));
+				
+				if(!c) score++;
 				
 				switch(challenge.getName()) {
 				case "PythagorasJump":

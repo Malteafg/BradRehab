@@ -19,6 +19,7 @@ public class Vars {
 	public static final int UP = 4;
 	public static final int DOWN = 5;
 	public static final int F1 = 6;
+	public static final int ENTER = 7;
 	public static final int _0 = 10;
 	public static final int _1 = 11;
 	public static final int _2 = 12;

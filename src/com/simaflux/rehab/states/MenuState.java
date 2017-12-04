@@ -8,14 +8,14 @@ import com.simaflux.rehab.utils.Loader;
 import com.simaflux.rehab.utils.Vars;
 
 public class MenuState extends State {
-	
-	private int selectedTime;
-	private final int[] times = {5, 10, 15, 20, 25, -1};
 
+	private int selectedTopic = 0;
+	public static String[] topics = {"Pythagoras", "Trigonometry", "Derive"};
+	public static boolean[] unlocked = {true, false, false};
+	public static int unlockedNum = 1;
+	
 	public MenuState(GameStateManager gsm) {
 		super(gsm);
-		
-		selectedTime = 0;
 	}
 
 	@Override
@@ -27,29 +27,28 @@ public class MenuState extends State {
 	public void render(Graphics2D g) {
 		Loader.getTexture("bg").render(g, 0, 0);
 		
-		g.setFont(new Font("Serif", Font.BOLD, 30));
+		g.setFont(new Font("Serif", Font.BOLD, 60));
 		g.setColor(Color.RED);
-		g.drawString("Time Limit", 200, 200);
-		
-		for(int i = 0; i < times.length; i++) {
-			g.drawString(i == times.length - 1 ? "No Limit" : Integer.toString(times[i]), 200, 240 + i * 40);
-			
-			if(i == selectedTime) {
-				g.fillOval(165, 215 + i * 40, 30, 30);
-			}
+		g.drawString("Pick a topic:", 200, 180);
+		for(int i = 0; i < topics.length; i++) {
+			if(unlocked[i]) g.setColor(Color.RED);
+			else g.setColor(Color.DARK_GRAY);
+			g.drawString(topics[i], 200, 270 + i * 70);
+			if(!unlocked[i]) Loader.getTexture("lock").render(g, 130, 210 + i * 70);
+			if(i == selectedTopic) g.fillOval(150, 230 + i * 70, 40, 40);
 		}
 	}
 
 	@Override
 	public void keyPressed(int k) {
-		if(k == Vars.SPACE) gsm.setState(new PlayState(gsm, selectedTime));
+		if(k == Vars.SPACE) gsm.setState(new PlayState(gsm, selectedTopic));
 		if(k == Vars.UP) {
-			selectedTime--;
-			if(selectedTime < 0) selectedTime = times.length - 1;
+			selectedTopic--;
+			if(selectedTopic < 0) selectedTopic = unlockedNum - 1;
 		}
 		if(k == Vars.DOWN) {
-			selectedTime++;
-			if(selectedTime > times.length - 1) selectedTime = 0;
+			selectedTopic++;
+			if(selectedTopic > unlockedNum - 1) selectedTopic = 0;
 		}
 	}
 

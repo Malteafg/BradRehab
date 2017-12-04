@@ -25,7 +25,7 @@ public class Animation {
 		
 		images = new Texture[length];
 		
-		if(Loader.getTexture(path).getImage() == null) System.out.println("NULL");
+		if(Loader.getTexture(path).getImage() == null) System.err.println(path + "  NULL");
 		for(int i = 0; i < length; i++) {
 			images[i] = new Texture(Loader.getTexture(path).getImage().getSubimage(i * width, 0, width, Loader.getTexture(path).getHeight()));
 		}

@@ -11,10 +11,16 @@ public class Loader {
 		loadTexture("bg", "environment");
 		loadTexture("plank", "environment");
 		loadTexture("hole", "environment");
+		loadTexture("lock", "environment");
+		loadTexture("calculator", "environment");
 		
 		loadTexture("user", "player");
 		loadTexture("run1", "player");
 		loadTexture("run2", "player");
+
+		loadTexture("disco1", "player");
+		loadTexture("dancemove2", "player");
+		
 		loadTexture("jump", "player");
 	}
 	
