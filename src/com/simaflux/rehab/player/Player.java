@@ -90,7 +90,7 @@ public class Player {
 				run1.render(g, pos);
 				break;
 			case 1:
-				run1.render(g, pos);
+				run2.render(g, pos);
 				break;
 			}
 		} else if(jumping && !rotating) {
