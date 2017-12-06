@@ -31,6 +31,8 @@ public class PlayState extends State {
 	private boolean won;
 	
 	private int level;
+	
+	private boolean pythagoras, calculator;
 
 	public PlayState(GameStateManager gsm, int level) {
 		super(gsm);
@@ -47,6 +49,9 @@ public class PlayState extends State {
 		won = false;
 		this.level = level;
 		deadTime = 180;
+		
+		pythagoras = false;
+		calculator = false;
 		
 		createChallenge();
 	}
@@ -155,6 +160,13 @@ public class PlayState extends State {
 			int w = g.getFontMetrics().stringWidth(MenuState.topics[level + 1] + " is unlocked");
 			g.drawString(MenuState.topics[level + 1] + " is unlocked", Vars.WIDTH / 2 - w / 2, 800);
 		}
+		
+		if(pythagoras) {
+			Loader.getTexture("pythagoras").render(g, 1500, 50);
+		}
+		if(calculator) {
+			Loader.getTexture("calculator").render(g, 1600, 700);
+		}
 	}
 
 	@Override
@@ -196,6 +208,9 @@ public class PlayState extends State {
 				}
 			}
 		}
+		
+		if(k == Vars.N) pythagoras = !pythagoras;
+		if(k == Vars.M) calculator = !calculator;
 	}
 
 }

@@ -13,6 +13,7 @@ public class Loader {
 		loadTexture("hole", "environment");
 		loadTexture("lock", "environment");
 		loadTexture("calculator", "environment");
+		loadTexture("pythagoras", "environment");
 		
 		loadTexture("user", "player");
 		loadTexture("run1", "player");

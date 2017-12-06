@@ -43,6 +43,8 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 		if(k == KeyEvent.VK_DOWN) keys[DOWN] = b;
 		if(k == KeyEvent.VK_F1) keys[F1] = b;
 		if(k == KeyEvent.VK_ENTER) keys[ENTER] = b;
+		if(k == KeyEvent.VK_N) keys[N] = b;
+		if(k == KeyEvent.VK_M) keys[M] = b;
 		if(k == KeyEvent.VK_0) keys[_0] = b;
 		if(k == KeyEvent.VK_1) keys[_1] = b;
 		if(k == KeyEvent.VK_2) keys[_2] = b;
